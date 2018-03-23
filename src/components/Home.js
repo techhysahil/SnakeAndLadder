@@ -40,23 +40,44 @@ export default class Home extends React.Component {
 					}	
 				}
 				return arr;
-			}
+		}
 
 		this.state = {
 			dataSource : this.dataSource(),
 			players : [
 				{
 					name : "A",
-					position : 67
+					position : 1
 				},
 				{
 					name : "B",
-					position : 32
+					position : 1
+				}
+			],
+			snakes : [
+				{
+					start : 3,
+					end : 20
+				},
+				{
+					start : 33,
+					end : 78
+				}
+			],
+			ladders : [
+				{
+					start : 9,
+					end : 34
+				},
+				{
+					start : 65,
+					end : 98
 				}
 			]
 		}
 
 		this.displayGameGrid = this.displayGameGrid.bind(this);
+		this.getLadderStyle = this.getLadderStyle.bind(this);
 	}
 
 	displayGameGrid(){
@@ -92,10 +113,48 @@ export default class Home extends React.Component {
 		return Math.floor(1+Math.random()*6)
 	}
 
+	getLadderStyle(ladder){
+		var posBottom1 = (Math.floor(ladder.start/10)*10)+5;
+		var posLeft1 = ((Math.floor(ladder.start/10)%2===0) ? (((ladder.start%10)-1)*10) : ((10-(ladder.start%10))*10));
+		var posBottom2 = (Math.floor(ladder.end/10)*10)+5;
+		var posLeft2 = ((Math.floor(ladder.end/10)%2===0) ? (((ladder.end%10)-1)*10) : ((10-(ladder.end%10))*10));
+
+		var Opposite = Math.sqrt(Math.pow(Math.abs(posBottom2-posBottom1),2)+Math.pow(Math.abs(posLeft2-posLeft1),2));
+		var angle = (Math.asin(Math.abs(posLeft2-posLeft1)/Opposite))*(180 / Math.PI);
+
+		var obj = { 
+				bottom: posBottom1+'%', 
+				left: posLeft1+'%', 
+				height : Opposite+'%',
+				width : 10+'%',
+				transform: "rotate("+angle+"deg)",
+				backgroundImage: "url(ladder.png)"
+			}
+		return obj;
+	}
+
 	render() {
 		return (
 		  <div className="page -home">
 		    <div className="snakeAndladder-wrapper">
+		    	<div className="ladder-wrapper">
+		    	{
+		    		this.state.ladders.map(function(ladder,index){
+		    			return(
+		    					<div key={index} style={this.getLadderStyle(ladder)} className={"ladder "}></div>
+		    			)
+		    		}.bind(this))
+		    	}
+		    	</div>
+		    	<div className="snake-wrapper">
+		    	{
+		    		this.state.snakes.map(function(snake,index){
+		    			return(
+		    					<div key={index} style={{ bottom: 5+'%', left: 5+'%', backgroundImage: "url(snake.png)"}} className={"snake "}></div>
+		    			)
+		    		})
+		    	}
+		    	</div>
 		    	<div className="players-wrapper">
 		    	{
 		    		this.state.players.map(function(player,index){
