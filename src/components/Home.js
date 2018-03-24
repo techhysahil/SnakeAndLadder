@@ -225,6 +225,11 @@ export default class Home extends React.Component {
 		  		<div className="single opt">Single Player</div>
 		  		<div className="multiple opt">Multple Player</div>
 		  	</div>
+		  	<div className="players-detail">
+		  		<div className="title">Enter Players Detail</div>
+		  		<input type="text" placeholder="Player Name" />
+		  		<div className="enter-game">Enter Game</div>
+		  	</div>
 		    <div className="snakeAndladder-wrapper">
 		    	<div className="ladder-wrapper">
 		    	{
