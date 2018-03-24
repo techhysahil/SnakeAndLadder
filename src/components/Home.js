@@ -219,7 +219,12 @@ export default class Home extends React.Component {
 
 	render() {
 		return (
-		  <div className="page -home">
+		  <div className="game-wrapper">
+		  	<div className="choose-players hide">
+		  		<div className="title">Select Game Mode</div>
+		  		<div className="single opt">Single Player</div>
+		  		<div className="multiple opt">Multple Player</div>
+		  	</div>
 		    <div className="snakeAndladder-wrapper">
 		    	<div className="ladder-wrapper">
 		    	{
