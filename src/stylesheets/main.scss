@@ -72,8 +72,9 @@
 		    height: 330px;
 		    background: transparent;
 		    position: absolute;
-		    -webkit-transform: scaleX(-1);
-    		transform: scaleX(-1);
+		    transform-origin: bottom;
+		    /*-webkit-transform: scaleX(-1);*/
+    		/*transform: scaleX(-1);*/
     		background-size: 100%, 100%;
     		background-repeat: no-repeat;
     	}
@@ -90,7 +91,7 @@
 		    height: 250px;
 		    background: transparent;
 		    position: absolute;
-		    background-size: 100%, 82%;
+		    background-size: 100%, 100%;
 		    overflow: hidden;
 		    transform-origin: bottom;
     	}

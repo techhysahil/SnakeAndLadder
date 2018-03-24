@@ -56,8 +56,8 @@ export default class Home extends React.Component {
 			],
 			snakes : [
 				{
-					start : 3,
-					end : 20
+					start : 13,
+					end : 43
 				},
 				{
 					start : 33,
@@ -66,18 +66,23 @@ export default class Home extends React.Component {
 			],
 			ladders : [
 				{
-					start : 9,
-					end : 34
+					start : 7,
+					end : 53
 				},
 				{
-					start : 65,
-					end : 98
+					start : 73,
+					end : 96
+				},
+				{
+					start : 41,
+					end : 82
 				}
 			]
 		}
 
 		this.displayGameGrid = this.displayGameGrid.bind(this);
 		this.getLadderStyle = this.getLadderStyle.bind(this);
+		this.getSnakesStyle = this.getSnakesStyle.bind(this);
 	}
 
 	displayGameGrid(){
@@ -113,6 +118,30 @@ export default class Home extends React.Component {
 		return Math.floor(1+Math.random()*6)
 	}
 
+	getSnakesStyle(snakes){
+		var posBottom1 = (Math.floor(snakes.start/10)*10)+5;
+		var posLeft1 = ((Math.floor(snakes.start/10)%2===0) ? (((snakes.start%10)-1)*10)+5 : ((10-(snakes.start%10))*10)+5);
+		var posBottom2 = (Math.floor(snakes.end/10)*10)+5;
+		var posLeft2 = ((Math.floor(snakes.end/10)%2===0) ? (((snakes.end%10)-1)*10)+5 : ((10-(snakes.end%10))*10)+5);
+
+		var Opposite = Math.sqrt(Math.pow(Math.abs(posBottom2-posBottom1),2)+Math.pow(Math.abs(posLeft2-posLeft1),2));
+		var angle = (Math.asin((posLeft2-posLeft1)/Opposite))*(180 / Math.PI);
+		var angleInRadian = (Math.atan(492/444));
+
+		// 444 × 492
+		var newwidth = Math.sin(angleInRadian)*Opposite;
+		var newHeight = Math.sqrt(Math.pow(Opposite,2)-Math.pow(newwidth,2));
+
+		var obj = {
+				bottom: posBottom1+'%', 
+				left: (posLeft1-Math.abs(posLeft2-posLeft1))+'%', 
+				height : newHeight+'%',
+				width : newwidth+'%',
+				backgroundImage: "url(snake.png)"
+			}
+		return obj;
+	}
+
 	getLadderStyle(ladder){
 		var posBottom1 = (Math.floor(ladder.start/10)*10)+5;
 		var posLeft1 = ((Math.floor(ladder.start/10)%2===0) ? (((ladder.start%10)-1)*10) : ((10-(ladder.start%10))*10));
@@ -120,7 +149,7 @@ export default class Home extends React.Component {
 		var posLeft2 = ((Math.floor(ladder.end/10)%2===0) ? (((ladder.end%10)-1)*10) : ((10-(ladder.end%10))*10));
 
 		var Opposite = Math.sqrt(Math.pow(Math.abs(posBottom2-posBottom1),2)+Math.pow(Math.abs(posLeft2-posLeft1),2));
-		var angle = (Math.asin(Math.abs(posLeft2-posLeft1)/Opposite))*(180 / Math.PI);
+		var angle = (Math.asin((posLeft2-posLeft1)/Opposite))*(180 / Math.PI);
 
 		var obj = { 
 				bottom: posBottom1+'%', 
@@ -150,9 +179,9 @@ export default class Home extends React.Component {
 		    	{
 		    		this.state.snakes.map(function(snake,index){
 		    			return(
-		    					<div key={index} style={{ bottom: 5+'%', left: 5+'%', backgroundImage: "url(snake.png)"}} className={"snake "}></div>
+		    					<div key={index} style={this.getSnakesStyle(snake)} className={"snake "}></div>
 		    			)
-		    		})
+		    		}.bind(this))
 		    	}
 		    	</div>
 		    	<div className="players-wrapper">
