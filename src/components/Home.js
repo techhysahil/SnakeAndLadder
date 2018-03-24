@@ -42,18 +42,21 @@ export default class Home extends React.Component {
 				return arr;
 		}
 
-		this.state = {
-			dataSource : this.dataSource(),
-			players : [
-				{
+		var players = [{
+					id : '56325362726',
 					name : "A",
 					position : 1
 				},
-				{
+				{	
+					id : '5632343434',
 					name : "B",
 					position : 1
-				}
-			],
+				}];
+
+		this.state = {
+			dataSource : this.dataSource(),
+			players : players,
+			currentPlayer : players[0],
 			snakes : [
 				{
 					start : 13,
@@ -83,6 +86,7 @@ export default class Home extends React.Component {
 		this.displayGameGrid = this.displayGameGrid.bind(this);
 		this.getLadderStyle = this.getLadderStyle.bind(this);
 		this.getSnakesStyle = this.getSnakesStyle.bind(this);
+		this.playDice = this.playDice.bind(this);
 	}
 
 	displayGameGrid(){
@@ -114,8 +118,59 @@ export default class Home extends React.Component {
 		})
 	}
 
-	throwStriker(){
+	rotateDice(){
 		return Math.floor(1+Math.random()*6)
+	}
+
+	playDice(){
+		var players = JSON.parse(JSON.stringify(this.state.players));
+		var number = this.rotateDice();
+		var currentPlayer = JSON.parse(JSON.stringify(this.state.currentPlayer));
+
+		var players = players.map((player,index) => {
+			if(currentPlayer.id === player.id){
+				if(player.position+number === 100){
+					player.position = player.position+number;
+					alert("Player "+player.name +"win this Game");
+				}else if(player.position+number < 100){
+					player.position = player.position+number;
+				}
+				
+			}
+			return player;
+		});
+		this.setNextPlayer();
+		this.setState({
+			players : players
+		})
+	}
+
+	setNextPlayer(){
+		var players = JSON.parse(JSON.stringify(this.state.players));
+
+		var currentIndex =null;
+		var currentPlayer;
+		players.forEach((player,index) => {
+			if(this.state.currentPlayer.id === player.id){
+				currentIndex = index;
+			}
+		});
+
+		if(currentIndex != null){
+			if(players.length > currentIndex+1){
+					currentPlayer = players[currentIndex+1]
+			}else{
+					currentPlayer =  players[0]
+			}
+		}else{
+				currentPlayer =  players[0]
+		}
+
+		this.setState({
+			currentPlayer : currentPlayer
+		})
+
+		return currentPlayer;
 	}
 
 	getSnakesStyle(snakes){
@@ -194,6 +249,11 @@ export default class Home extends React.Component {
 		    	}
 		    	</div>
 		    	{this.displayGameGrid()}
+
+		    	<div className="dice-wrapper">
+		    		<div className="current-player">Current Player : {this.state.currentPlayer.name}</div>
+		    		<div className="play-dice" onClick={this.playDice}>Roll Dice</div>
+		    	</div>
 		    </div>
 		  </div>
 		);
