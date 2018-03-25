@@ -10,11 +10,17 @@ export default class Detail extends React.Component {
 					name : "",
 					id : Date.now(),
 					position : 1
+				},
+				{
+					name : "",
+					id : Date.now()+7767,
+					position : 1
 				}
 			],
 			currentPlayer : {}
 		}
 		this.enterGame = this.enterGame.bind(this);
+		this.handleChange = this.handleChange.bind(this);
 	}
 
 	enterGame(){
@@ -26,15 +32,24 @@ export default class Detail extends React.Component {
 		})
 	}
 
+	handleChange(e,index){
+		var players = JSON.parse(JSON.stringify(this.state.players));
+		players[index].name = e.target.value;
+
+		this.setState({
+			players : players
+		})
+	}
+
 	// render
 	render() {
 		return (
 			<div className="players-detail">
 		  		<div className="title">Enter Players Detail</div>
 		  		{
-		  			this.state.players.map((player) => {
+		  			this.state.players.map((player,index) => {
 		  				return (
-		  					<input key="player.id" value={player.name} type="text" placeholder="Player Name" />
+		  					<input key={player.id} value={player.name} onChange={(e) => this.handleChange(e,index)} type="text" placeholder="Player Name" />
 		  				)
 		  			})
 		  		}
