@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux'
 import { push } from 'react-router-redux'
 import { connect } from 'react-redux';
 import { history } from "../store.js";
+import { singlePlayer,multiPlayer } from "../reducers/index.js";
 
 import reducer from '../reducers/index'
 
@@ -10,8 +11,8 @@ import reducer from '../reducers/index'
 const Start = props => (
 	<div className="choose-players">
 		<div className="title">Select Game Mode</div>
-		<div className="single opt" onClick={() => this.selectGameMode("single")}>Single Player</div>
-		<div className="multiple opt" onClick={() => this.selectGameMode("multiple")}>Multple Player</div>
+		<div className="single opt" onClick={() => props.singlePlayer}>Single Player</div>
+		<div className="multiple opt" onClick={() => props.multiPlayer}>Multple Player</div>
 	</div>
 )
 
@@ -22,21 +23,25 @@ const mapStateToProps = ( state, ownProps ) => {
 	};
 }
 
-// function mapDispatchToProps(dispatch) {
-//   return bindActionCreators({
-//     selectGameMode: selectGameMode
-//   }, dispatch);
-// }
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    selectGameMode: singlePlayer,
+    multiPlayer : multiPlayer
+
+  }, dispatch);
+}
 
 const ConnectStart = connect(
-	mapStateToProps
+	mapStateToProps,mapDispatchToProps
 )(Start)
 
+export default ConnectStart;
 
 
 
 
-// Not found page component
+
+
 // export default class Start extends React.Component {
 //   	constructor(props){
 // 		super(props);
