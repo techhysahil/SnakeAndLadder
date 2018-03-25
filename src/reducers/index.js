@@ -8,5 +8,5 @@ import start from './start';
 export const reducers = combineReducers({
   routing: routerReducer,
   form: formReducer,
-  // start: start
+  start: start
 });

@@ -1,27 +1,12 @@
-const Single_Player = 'Single_Player';
-const Multi_Player = 'Multi_Player';
+import {Single_Player,Multi_Player} from  '../constant/index'
 
-
-function start(action, state=[]){
+function start(state=[], action){
 	switch(action.type){
 		case  Single_Player: 
-			state.push({
-				name : "",
-				id : Date.now(),
-				position : 1
-			});
+			state.concat(action.payload)
 			return state;
 		case Multi_Player:
-			state.push({
-				name : "",
-				id : Date.now(),
-				position : 1
-			})
-			state.push({
-				name : "",
-				id : Date.now()+5776,
-				position : 1
-			})
+			state.concat(action.payload)
 			return state;
 		default:
       		return state
