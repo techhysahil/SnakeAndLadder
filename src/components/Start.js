@@ -1,5 +1,9 @@
 import React from "react";
+import { connect } from 'react-redux';
 import { history } from "../store.js";
+
+import reducer from '../reducers/index'
+
 
 // Not found page component
 export default class Start extends React.Component {
@@ -52,3 +56,30 @@ export default class Start extends React.Component {
 		);
 	}
 }
+
+// function selectGameMode() {
+//   return {
+//     type: 'Single_Player',
+//     payload: []
+//   }
+// }
+
+// const mapStateToProps = ( state, ownProps ) => {
+// 	return {
+// 		start: state.start
+// 	};
+// }
+
+// function mapDispatchToProps(dispatch) {
+//   return bindActionCreators({
+//     selectGameMode: selectGameMode
+//   }, dispatch);
+// }
+
+// const ConnectStart = connect(
+// 	mapStateToProps,
+// 	mapDispatchToProps
+// )(Start)
+
+
+// export default ConnectStart;
