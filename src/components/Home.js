@@ -76,8 +76,6 @@ export default class Home extends React.Component {
 		this.getLadderStyle = this.getLadderStyle.bind(this);
 		this.getSnakesStyle = this.getSnakesStyle.bind(this);
 		this.playDice = this.playDice.bind(this);
-		this.selectGameMode = this.selectGameMode.bind(this);
-		this.enterGame = this.enterGame.bind(this);
 	}
 
 	displayGameGrid(){
@@ -208,57 +206,9 @@ export default class Home extends React.Component {
 		return obj;
 	}
 
-	selectGameMode(gameMode){
-		var players = [];
-		if(gameMode === "single"){
-			players.push({
-				name : "",
-				id : Date.now(),
-				position : 1
-			})
-		}else if(gameMode === "multiple"){
-			players.push({
-				name : "",
-				id : Date.now(),
-				position : 1
-			})
-			players.push({
-				name : "",
-				id : Date.now()+5776,
-				position : 1
-			})
-		}
-		this.setState({
-			players : players
-		})
-	}
-
-	enterGame(){
-		var players = JSON.parse(JSON.stringify(this.state.players));
-		this.setState({
-			currentPlayer : players[0]
-		})
-	}
-
 	render() {
 		return (
 		  <div className="game-wrapper">
-		  	<div className="choose-players hide">
-		  		<div className="title">Select Game Mode</div>
-		  		<div className="single opt" onClick={() => this.selectGameMode("single")}>Single Player</div>
-		  		<div className="multiple opt" onClick={() => this.selectGameMode("multiple")}>Multple Player</div>
-		  	</div>
-		  	<div className="players-detail">
-		  		<div className="title">Enter Players Detail</div>
-		  		{
-		  			this.players.map((player) => {
-		  				return (
-		  					<input key="player.id" value={player.name} type="text" placeholder="Player Name" />
-		  				)
-		  			})
-		  		}
-		  		<div className="enter-game" onClick={this.enterGame}>Enter Game</div>
-		  	</div>
 		    <div className="snakeAndladder-wrapper">
 		    	<div className="ladder-wrapper">
 		    	{
