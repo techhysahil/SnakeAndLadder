@@ -4,7 +4,6 @@ import { push } from 'react-router-redux'
 import { connect } from 'react-redux';
 import { history } from "../store.js";
 import * as Action from "../actions/index.js";
-
 import reducer from '../reducers/index'
 
 const mapStateToProps = ( state, ownProps ) => {

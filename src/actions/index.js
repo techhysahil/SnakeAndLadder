@@ -28,3 +28,13 @@ export function multiPlayer() {
     ]
   }
 }
+
+export function changePlayerName(id,name) {
+  return {
+    type: 'Add_Player_Name', 
+    payload: {
+      id : id,
+      name : name
+    }
+  }
+}
