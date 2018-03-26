@@ -67,7 +67,19 @@ class Home extends React.Component {
 				newPosition = player.position;
 				currentPlayerName = player.name;
 				if(player.position+number <= 100){
-					newPosition = player.position+number;
+					newPosition = player.position+6;
+					// Check for Snake & Ladders
+					this.props.ladders.forEach((ladder,index) => {
+						if(ladder.start === newPosition){
+							newPosition = ladder.end;
+						}
+					});
+
+					this.props.snakes.forEach((snake,index) => {
+						if(snake.start === newPosition){
+							newPosition = snake.end;
+						}
+					})
 				}
 			}
 		});
