@@ -14,14 +14,16 @@ const mapStateToProps = ( state, ownProps ) => {
 		ladders : state.home.ladders,
 		snakes : state.home.snakes,
 		currentPlayerId : state.home.currentPlayerId,
-		buildPlayers : state.players
+		buildPlayers : state.players,
+		gameState : state.home.gameState
 	};
 }
 
 const mapDispatchToProps = dispatch => ({
     updatePlayerPosition: (id,position) => dispatch( Action.updatePlayerPosition(id,position) ),
-    updateCurrentPlayerId: (id) => dispatch( Action.updatePlayerPosition(id) ),
-    updatePlayers: (players) => dispatch( Action.updatePlayers(players) )
+    updateCurrentPlayerId: (id) => dispatch( Action.updateCurrentPlayerId(id) ),
+    updatePlayers: (players) => dispatch( Action.updatePlayers(players) ),
+    updateGameState: () => dispatch( Action.updateGameState() )
 });
 
 
@@ -58,20 +60,23 @@ class Home extends React.Component {
 		var players = JSON.parse(JSON.stringify(this.props.players));
 		var number = this.rotateDice();
 		var newPosition ;
-		var players = players.forEach((player,index) => {
+		var currentPlayerName;
+		players.forEach((player,index) => {
 			if(this.props.currentPlayerId === player.id){
-				newPosition = player.position+number;
-				if(newPosition === 100){
-					player.position = player.position+number;
-					alert("Player "+player.name +"win this Game");
-				}else if(newPosition < 100){
-					player.position = player.position+number;
+				newPosition = player.position;
+				currentPlayerName = player.name;
+				if(player.position+number <= 100){
+					newPosition = player.position+number;
 				}
 			}
-			return player;
 		});
 
 		this.props.updatePlayerPosition(this.props.currentPlayerId,newPosition);
+
+		if(newPosition === 100){
+			this.props.updateGameState()
+			// alert("Player "+currentPlayerName +"win this Game");
+		}
 
 		this.setNextPlayer();
 	}
@@ -189,9 +194,13 @@ class Home extends React.Component {
 		    	</div>
 		    	{this.displayGameGrid()}
 
-		    	<div className="dice-wrapper">
+		    	<div className={"dice-wrapper"+(this.props.gameState === "completed" ? " hide":"")}>
 		    		<div className="current-player">Current Player : {this.getcurrentPlayerName()}</div>
 		    		<div className="play-dice" onClick={this.playDice.bind(this)}>Roll Dice</div>
+		    	</div>
+
+		    	<div className={"game-over"+(this.props.gameState === "completed" ? " show":"")}>
+		    		<div className="text">Game Over</div>
 		    	</div>
 		    </div>
 		  </div>

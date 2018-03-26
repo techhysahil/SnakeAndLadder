@@ -1,4 +1,4 @@
-import {Single_Player,Multi_Player,Add_Player_Name,Add_New_Player,Update_Player_Position,Update_CurrentPlayer_Id,Update_Players} from  '../constant/index';
+import {Single_Player,Multi_Player,Add_Player_Name,Add_New_Player,Update_Player_Position,Update_CurrentPlayer_Id,Update_Players,Update_Game_State} from  '../constant/index';
 
 // Start Component
 export function singlePlayer() {
@@ -74,5 +74,10 @@ export function updatePlayers(players){
   return {
     type: Update_Players, 
     players : players
+  }
+}
+export function updateGameState(players){
+  return {
+    type: Update_Game_State
   }
 }

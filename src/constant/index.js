@@ -8,3 +8,4 @@ export const Add_New_Player = 'Add_New_Player';
 export const Update_Player_Position = 'Update_Player_Position';
 export const Update_CurrentPlayer_Id = 'Update_CurrentPlayer_Id';
 export const Update_Players = 'Update_Players';
+export const Update_Game_State = 'Update_Game_State'
