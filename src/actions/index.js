@@ -1,4 +1,4 @@
-import {Single_Player,Multi_Player,Add_Player_Name,Add_New_Player,Update_Player_Position,Update_CurrentPlayer_Id,Update_Players,Update_Game_State} from  '../constant/index';
+import {Single_Player,Multi_Player,Initlize_State,Add_Player_Name,Add_New_Player,Update_Player_Position,Update_CurrentPlayer_Id,Update_Players,Update_Game_State,Reset_Game_State} from  '../constant/index';
 
 // Start Component
 export function singlePlayer() {
@@ -28,6 +28,12 @@ export function multiPlayer() {
       position : 1
       }
     ]
+  }
+}
+
+export function initlizeState() {
+  return { 
+    type: Initlize_State
   }
 }
 
@@ -76,8 +82,15 @@ export function updatePlayers(players){
     players : players
   }
 }
+
 export function updateGameState(players){
   return {
     type: Update_Game_State
+  }
+}
+
+export function resetAppState(){
+  return {
+    type: Reset_Game_State
   }
 }

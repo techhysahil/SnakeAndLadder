@@ -214,14 +214,26 @@
     &.show{
     	display : block;
     }
+    .win-text{
+    	font-size: 24px;
+    	margin-bottom: 20px;
+    }
     .text{
     	font-size: 30px;
 	    color: #000;
 	    padding: 20px;
-	    position: absolute;
-	    top: 50%;
-	    left: 50%;
-	    transform: translate(-50%,-50%);
+	    display: block;
+	    position: relative;
 	    border: 1px dashed #000;
+	    margin-bottom: 50px;
+    }
+    .Play-Again{
+    	display: inline-block;
+	    font-size: 24px;
+	    padding: 4px 20px;
+	    box-sizing: border-box;
+	    color: #555;
+	    border: 1px solid #999;
+	    cursor: pointer;
     }
 }

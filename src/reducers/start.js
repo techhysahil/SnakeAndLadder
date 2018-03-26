@@ -1,4 +1,4 @@
-import {Single_Player,Multi_Player} from  '../constant/index'
+import {Single_Player,Multi_Player,Initlize_State} from  '../constant/index'
 
 function start(state=[], action){
 	switch(action.type){
@@ -8,8 +8,10 @@ function start(state=[], action){
 		case Multi_Player:
 			state = state.concat(action.payload)
 			return state;
+		case Initlize_State:
+			return [];
 		default:
-      		return state
+      		return state;
 	}
 }
 

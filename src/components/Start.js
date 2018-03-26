@@ -15,10 +15,13 @@ const mapStateToProps = ( state, ownProps ) => {
 const mapDispatchToProps = dispatch => ({
     singlePlayer: () => dispatch(Action.singlePlayer()),
     multiPlayer: () => dispatch( Action.multiPlayer() ),
+    initlizeState: () => dispatch( Action.initlizeState() ),
 });
 
 class Start extends Component {
-	
+	componentDidMount(){
+		this.props.initlizeState();
+	}
 	selectGameMode(str){ 
 		if(str === "single"){
 			this.props.singlePlayer()

@@ -23,7 +23,8 @@ const mapDispatchToProps = dispatch => ({
     updatePlayerPosition: (id,position) => dispatch( Action.updatePlayerPosition(id,position) ),
     updateCurrentPlayerId: (id) => dispatch( Action.updateCurrentPlayerId(id) ),
     updatePlayers: (players) => dispatch( Action.updatePlayers(players) ),
-    updateGameState: () => dispatch( Action.updateGameState() )
+    updateGameState: () => dispatch( Action.updateGameState() ),
+    resetAppState: () => dispatch( Action.resetAppState() )
 });
 
 
@@ -161,6 +162,11 @@ class Home extends React.Component {
 		return currentPlayerName;
 	}
 
+	resetGame(){
+		this.props.resetAppState();
+		store.dispatch(push('/start'))
+	}
+
 	render() {
 		return (
 		  <div className="game-wrapper">
@@ -200,7 +206,10 @@ class Home extends React.Component {
 		    	</div>
 
 		    	<div className={"game-over"+(this.props.gameState === "completed" ? " show":"")}>
+		    		<div className="win-text">{this.getcurrentPlayerName() + " win the game"}</div>
 		    		<div className="text">Game Over</div>
+
+		    		<div className="Play-Again" onClick={this.resetGame.bind(this)}>Play Again</div>
 		    	</div>
 		    </div>
 		  </div>

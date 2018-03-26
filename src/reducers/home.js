@@ -1,4 +1,4 @@
-import {Update_Player_Position,Update_CurrentPlayer_Id,Update_Players,Update_Game_State} from  '../constant/index'
+import {Update_Player_Position,Update_CurrentPlayer_Id,Update_Players,Update_Game_State,Reset_Game_State} from  '../constant/index'
 
 function dataSource(){
 				var arr=[];
@@ -96,6 +96,8 @@ function home(state=initialState, action){
 			var stateCopy = JSON.parse(JSON.stringify(state));
 			stateCopy.gameState = "completed";
 			return stateCopy;
+		case Reset_Game_State:
+			return initialState;
 		default:
       		return state
 	}
