@@ -13,7 +13,8 @@ const mapStateToProps = ( state, ownProps ) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-    changePlayerName: (id,value) => dispatch( Action.changePlayerName(id,value) )
+    changePlayerName: (id,value) => dispatch( Action.changePlayerName(id,value) ),
+    addPlayer: () => dispatch( Action.addPlayer() )
 });
 
 class Detail extends Component {
@@ -28,10 +29,11 @@ class Detail extends Component {
         {
           this.props.detail.map((player,index) => {
             return (
-              <input key={player.id} value={player.name} onChange={(e) => props.changePlayerName(player.id,e.target.value)} type="text" placeholder="Player Name" />
+              <input key={player.id} value={player.name} onChange={(e) => this.props.changePlayerName(player.id,e.target.value)} type="text" placeholder="Player Name" />
             )
           })
         }
+        <div className="add-player" onClick={() => this.props.addPlayer()}>Add Player</div>
         <div className="enter-game" onClick={() => this.enterGame()}>Enter Game</div>
       </div>
     )

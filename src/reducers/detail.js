@@ -1,4 +1,4 @@
-import {Add_Player_Name} from  '../constant/index'
+import {Add_Player_Name,Add_New_Player} from  '../constant/index'
 
 function detail(state=[
       {
@@ -22,8 +22,12 @@ function detail(state=[
 				return player;
 			})
 			return stateCopy;
+    case  Add_New_Player:
+      var stateCopy = JSON.parse(JSON.stringify(state));
+      stateCopy = stateCopy.concat(action.payload);
+      return stateCopy;
 		default:
-      		return state
+      return state
 	}
 }
 

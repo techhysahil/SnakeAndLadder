@@ -1,7 +1,27 @@
-import React from "react";
+import React, { Component } from 'react'
+import { bindActionCreators } from 'redux'
+import { push } from 'react-router-redux'
+import { connect } from 'react-redux';
+import { history, store } from "../store.js";
+import * as Action from "../actions/index.js";
+import reducer from '../reducers/index'
 
-// Home page component
-export default class Home extends React.Component {
+
+const mapStateToProps = ( state, ownProps ) => {
+	return {
+		players: state.players,
+		ladders : state.ladders,
+		stairs : state.stairs,
+		currentPlayerId : state.currentPlayerId
+	};
+}
+
+const mapDispatchToProps = dispatch => ({
+    changePlayerName: (id,value) => dispatch( Action.changePlayerName(id,value) )
+});
+
+
+class Home extends React.Component {
 	constructor(props){
 		super(props);
 
