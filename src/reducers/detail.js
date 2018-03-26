@@ -14,13 +14,14 @@ function detail(state=[
     ], action){
 	switch(action.type){
 		case  Add_Player_Name: 
-			state = state.map((player,index) => {
-				if(player.id === payload.id){
-					player.name = payload.name;
+      var stateCopy = JSON.parse(JSON.stringify(state));
+			stateCopy = stateCopy.map((player,index) => {
+				if(player.id === action.payload.id){
+					player.name = action.payload.name;
 				}
 				return player;
 			})
-			return state;
+			return stateCopy;
 		default:
       		return state
 	}

@@ -13,7 +13,7 @@ const mapStateToProps = ( state, ownProps ) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-    changePlayerName: () => dispatch( Action.changePlayerName() )
+    changePlayerName: (id,value) => dispatch( Action.changePlayerName(id,value) )
 });
 
 
