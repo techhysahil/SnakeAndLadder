@@ -1,20 +1,9 @@
 import {Add_Player_Name,Add_New_Player} from  '../constant/index'
 
-function detail(state=[
-      {
-        name : "",
-        id : Date.now(),
-        position : 1
-      },
-      {
-        name : "",
-      id : Date.now()+6787878,
-      position : 1
-      }
-    ], action){
+function detail(state=[], action){
 	switch(action.type){
 		case  Add_Player_Name: 
-      var stateCopy = JSON.parse(JSON.stringify(state));
+      		var stateCopy = JSON.parse(JSON.stringify(state));
 			stateCopy = stateCopy.map((player,index) => {
 				if(player.id === action.payload.id){
 					player.name = action.payload.name;

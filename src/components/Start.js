@@ -8,7 +8,7 @@ import reducer from '../reducers/index'
 
 const mapStateToProps = ( state, ownProps ) => {
 	return {
-		start: state.start
+		players: state.players
 	};
 }
 
@@ -32,8 +32,8 @@ class Start extends Component {
 		return (
 			<div className="choose-players">
 				<div className="title">Select Game Mode</div>
-				<div className="single opt" onClick={() => this.selectGameMode()}>Single Player</div>
-				<div className="multiple opt" onClick={() => this.selectGameMode()}>Multple Player</div>
+				<div className="single opt" onClick={() => this.selectGameMode("single")}>Single Player</div>
+				<div className="multiple opt" onClick={() => this.selectGameMode("multiple")}>Multple Player</div>
 			</div>
 		)
 	}

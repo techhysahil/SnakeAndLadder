@@ -8,7 +8,7 @@ import reducer from '../reducers/index'
 
 const mapStateToProps = ( state, ownProps ) => {
 	return {
-		detail: state.detail
+		players: state.players
 	};
 }
 
@@ -27,7 +27,7 @@ class Detail extends Component {
       <div className="players-detail">
         <div className="title">Enter Players Detail</div>
         {
-          this.props.detail.map((player,index) => {
+          this.props.players.map((player,index) => {
             return (
               <input key={player.id} value={player.name} onChange={(e) => this.props.changePlayerName(player.id,e.target.value)} type="text" placeholder="Player Name" />
             )
