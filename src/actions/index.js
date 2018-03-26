@@ -1,4 +1,4 @@
-import {Single_Player,Multi_Player,Add_Player_Name,Add_New_Player,Update_Player_Position,Update_CurrentPlayer_Id} from  '../constant/index';
+import {Single_Player,Multi_Player,Add_Player_Name,Add_New_Player,Update_Player_Position,Update_CurrentPlayer_Id,Update_Players} from  '../constant/index';
 
 // Start Component
 export function singlePlayer() {
@@ -58,10 +58,8 @@ export function addPlayer() {
 export function updatePlayerPosition(id,position){
   return {
     type: Update_Player_Position, 
-    payload: {
-      id : id,
-      position : position
-    }
+    id : id,
+    position : position
   }
 }
 
@@ -69,5 +67,12 @@ export function updateCurrentPlayerId(id){
   return {
     type: Update_CurrentPlayer_Id, 
     id : id
+  }
+}
+
+export function updatePlayers(players){
+  return {
+    type: Update_Players, 
+    players : players
   }
 }

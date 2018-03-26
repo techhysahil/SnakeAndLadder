@@ -9,32 +9,40 @@ import reducer from '../reducers/index'
 
 const mapStateToProps = ( state, ownProps ) => {
 	return {
-		players: state.players,
-		ladders : state.ladders,
-		stairs : state.stairs,
-		currentPlayerId : state.currentPlayerId
+		dataSource : state.home.dataSource,
+		players: state.home.players,
+		ladders : state.home.ladders,
+		snakes : state.home.snakes,
+		currentPlayerId : state.home.currentPlayerId,
+		buildPlayers : state.players
 	};
 }
 
 const mapDispatchToProps = dispatch => ({
     updatePlayerPosition: (id,position) => dispatch( Action.updatePlayerPosition(id,position) ),
-    updateCurrentPlayerId: (id) => dispatch( Action.updatePlayerPosition(id) )
+    updateCurrentPlayerId: (id) => dispatch( Action.updatePlayerPosition(id) ),
+    updatePlayers: (players) => dispatch( Action.updatePlayers(players) )
 });
 
 
 class Home extends React.Component {
-
+	componentDidMount(){
+		var buildPlayers = JSON.parse(JSON.stringify(this.props.buildPlayers));
+		this.props.updatePlayers(buildPlayers)
+	}
 
 	displayGameGrid(){
 		return (
 			this.props.dataSource.map((item,i) => {
 				return (<div key={i.toString()} className="game-row">
 					{item.map((subitem,j) => {
-						return (
-								<div key={i.toString()+j.toString()} data-k={this.state.dataSource[i][j]["index"]} className="grid-cell">
+						if(this.props.dataSource[i][j] && this.props.dataSource[i][j]["index"]){
+							return (
+								<div key={i.toString()+j.toString()} data-k={this.props.dataSource[i][j]["index"]} className="grid-cell">
 									<span>{this.props.dataSource[i][j]["index"]}</span>
 								</div>
 							)
+						}
 					})}
 				
 				</div>)
@@ -183,7 +191,7 @@ class Home extends React.Component {
 
 		    	<div className="dice-wrapper">
 		    		<div className="current-player">Current Player : {this.getcurrentPlayerName()}</div>
-		    		<div className="play-dice" onClick={this.playDice}>Roll Dice</div>
+		    		<div className="play-dice" onClick={this.playDice.bind(this)}>Roll Dice</div>
 		    	</div>
 		    </div>
 		  </div>

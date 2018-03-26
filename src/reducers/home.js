@@ -1,4 +1,4 @@
-import {Change_Player_Position,Update_CurrentPlayer_Id} from  '../constant/index'
+import {Update_Player_Position,Update_CurrentPlayer_Id,Update_Players} from  '../constant/index'
 
 function dataSource(){
 				var arr=[];
@@ -62,7 +62,9 @@ var initialState = {
 			start : 41,
 			end : 82
 		}
-	]
+	],
+	players : [],
+	currentPlayerId : null
 };
 
 function home(state=initialState, action){
@@ -70,7 +72,7 @@ function home(state=initialState, action){
 		case  Update_Player_Position: 
 			var stateCopy = JSON.parse(JSON.stringify(state));
 			var players = [];
-			stateCopy.players = stateCopy.players.foreach((player,index) => {
+			stateCopy.players = stateCopy.players.map((player,index) => {
 				if(player.id === action.id){
 					player.position = action.position;
 				}
@@ -81,9 +83,17 @@ function home(state=initialState, action){
 			var stateCopy = JSON.parse(JSON.stringify(state));
 			stateCopy.currentPlayerId = action.id
 			return stateCopy;
+		case Update_Players:
+			var playersCopy = JSON.parse(JSON.stringify(action.players));
+			var stateCopy = JSON.parse(JSON.stringify(state));
+			var currentPlayerId = playersCopy[0].id
+
+			stateCopy.players = playersCopy;
+			stateCopy.currentPlayerId = currentPlayerId;
+			return stateCopy;
 		default:
       		return state
 	}
 }
 
-export default start;
+export default home;
