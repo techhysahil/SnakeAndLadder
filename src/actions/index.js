@@ -1,7 +1,9 @@
+import {Single_Player,Multi_Player,Add_Player_Name,Add_New_Player,Update_Player_Position,Update_CurrentPlayer_Id} from  '../constant/index';
+
 // Start Component
 export function singlePlayer() {
   return { 
-    type: 'Single_Player', 
+    type: Single_Player, 
     payload: [{
       name : "",
       id : Date.now(),
@@ -13,7 +15,7 @@ export function singlePlayer() {
 
 export function multiPlayer() {
   return { 
-    type: 'Multi_Player',
+    type: Multi_Player,
     payload: [
       {
         name : "",
@@ -32,7 +34,7 @@ export function multiPlayer() {
 // Detail component
 export function changePlayerName(id,name) {
   return {
-    type: 'Add_Player_Name', 
+    type: Add_Player_Name, 
     payload: {
       id : id,
       name : name
@@ -42,7 +44,7 @@ export function changePlayerName(id,name) {
 
 export function addPlayer() {
   return {
-    type: 'Add_New_Player', 
+    type: Add_New_Player, 
     payload: [{
         name : "",
         id : Date.now(),
@@ -53,9 +55,9 @@ export function addPlayer() {
 
 
 // Home Component
-export function changePlayerPosition(id,position){
+export function updatePlayerPosition(id,position){
   return {
-    type: 'Change_Player_Position', 
+    type: Update_Player_Position, 
     payload: {
       id : id,
       position : position
@@ -63,10 +65,9 @@ export function changePlayerPosition(id,position){
   }
 }
 
-export function changeCurrentPlayerId(id){
+export function updateCurrentPlayerId(id){
   return {
-    type: 'Change_CurrentPlayer_Id', 
-    id : id,
-    position : position
+    type: Update_CurrentPlayer_Id, 
+    id : id
   }
 }

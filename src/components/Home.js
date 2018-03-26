@@ -17,95 +17,22 @@ const mapStateToProps = ( state, ownProps ) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-    changePlayerName: (id,value) => dispatch( Action.changePlayerName(id,value) )
+    updatePlayerPosition: (id,position) => dispatch( Action.updatePlayerPosition(id,position) ),
+    updateCurrentPlayerId: (id) => dispatch( Action.updatePlayerPosition(id) )
 });
 
 
 class Home extends React.Component {
-	constructor(props){
-		super(props);
 
-		this.dataSource = function(){
-				var arr=[];
-				for(var i=0;i<10;i++){
-					arr[i]=[];
-					for(var j=1;j<=10;j++){
-						if(i==9){
-							arr[i][j]={
-								index : j.toString()
-							};	
-						}else{
-							if(i%2 === 0){
-								if(j===1){
-									arr[i][j]={
-										index : (10-i).toString()+(0).toString()
-									};	
-								}else{
-									arr[i][j]={
-										index : (9-i).toString()+(11-j).toString()
-									};	
-								}
-							}else{
-								if(j===10){
-									arr[i][j]={
-										index : (10-i).toString()+(0).toString()
-									};	
-								}else{
-									arr[i][j]={
-										index : (9-i).toString()+(j).toString()
-									};
-								}
-							}
-						}
-					}	
-				}
-				return arr;
-		}
-
-		this.state = {
-			dataSource : this.dataSource(),
-			players : [],
-			currentPlayer : {},
-			snakes : [
-				{
-					start : 13,
-					end : 43
-				},
-				{
-					start : 33,
-					end : 78
-				}
-			],
-			ladders : [
-				{
-					start : 7,
-					end : 53
-				},
-				{
-					start : 73,
-					end : 96
-				},
-				{
-					start : 41,
-					end : 82
-				}
-			]
-		}
-
-		this.displayGameGrid = this.displayGameGrid.bind(this);
-		this.getLadderStyle = this.getLadderStyle.bind(this);
-		this.getSnakesStyle = this.getSnakesStyle.bind(this);
-		this.playDice = this.playDice.bind(this);
-	}
 
 	displayGameGrid(){
 		return (
-			this.state.dataSource.map((item,i) => {
+			this.props.dataSource.map((item,i) => {
 				return (<div key={i.toString()} className="game-row">
 					{item.map((subitem,j) => {
 						return (
 								<div key={i.toString()+j.toString()} data-k={this.state.dataSource[i][j]["index"]} className="grid-cell">
-									<span>{this.state.dataSource[i][j]["index"]}</span>
+									<span>{this.props.dataSource[i][j]["index"]}</span>
 								</div>
 							)
 					})}
@@ -115,71 +42,54 @@ class Home extends React.Component {
 		)
 	}
 
-	addTeamPlayer(teamName){
-		const teams = JSON.parse(JSON.stringify(this.state.teams));
-		teams.push({
-			name : teamName,
-			initialPos : 1
-		});
-
-		this.setState({
-			teams : teams
-		})
-	}
-
 	rotateDice(){
 		return Math.floor(1+Math.random()*6)
 	}
 
 	playDice(){
-		var players = JSON.parse(JSON.stringify(this.state.players));
+		var players = JSON.parse(JSON.stringify(this.props.players));
 		var number = this.rotateDice();
-		var currentPlayer = JSON.parse(JSON.stringify(this.state.currentPlayer));
-
-		var players = players.map((player,index) => {
-			if(currentPlayer.id === player.id){
-				if(player.position+number === 100){
+		var newPosition ;
+		var players = players.forEach((player,index) => {
+			if(this.props.currentPlayerId === player.id){
+				newPosition = player.position+number;
+				if(newPosition === 100){
 					player.position = player.position+number;
 					alert("Player "+player.name +"win this Game");
-				}else if(player.position+number < 100){
+				}else if(newPosition < 100){
 					player.position = player.position+number;
 				}
-				
 			}
 			return player;
 		});
+
+		this.props.updatePlayerPosition(this.props.currentPlayerId,newPosition);
+
 		this.setNextPlayer();
-		this.setState({
-			players : players
-		})
 	}
 
 	setNextPlayer(){
-		var players = JSON.parse(JSON.stringify(this.state.players));
+		var players = JSON.parse(JSON.stringify(this.props.players));
 
 		var currentIndex =null;
-		var currentPlayer;
+		var currentPlayerId;
 		players.forEach((player,index) => {
-			if(this.state.currentPlayer.id === player.id){
+			if(this.props.currentPlayerId === player.id){
 				currentIndex = index;
 			}
 		});
 
 		if(currentIndex != null){
 			if(players.length > currentIndex+1){
-					currentPlayer = players[currentIndex+1]
+					currentPlayerId = players[currentIndex+1].id
 			}else{
-					currentPlayer =  players[0]
+					currentPlayerId =  players[0].id
 			}
 		}else{
-				currentPlayer =  players[0]
+				currentPlayerId =  players[0].id
 		}
 
-		this.setState({
-			currentPlayer : currentPlayer
-		})
-
-		return currentPlayer;
+		this.props.updateCurrentPlayerId(currentPlayerId);
 	}
 
 	getSnakesStyle(snakes){
@@ -226,13 +136,25 @@ class Home extends React.Component {
 		return obj;
 	}
 
+	getcurrentPlayerName(){
+		var players = JSON.parse(JSON.stringify(this.props.players)),
+		currentPlayerName;
+
+		players.forEach((player,index) => {
+			if(player.id === this.props.currentPlayerId){
+				currentPlayerName = player.name;
+			}
+		})
+		return currentPlayerName;
+	}
+
 	render() {
 		return (
 		  <div className="game-wrapper">
 		    <div className="snakeAndladder-wrapper">
 		    	<div className="ladder-wrapper">
 		    	{
-		    		this.state.ladders.map(function(ladder,index){
+		    		this.props.ladders.map(function(ladder,index){
 		    			return(
 		    					<div key={index} style={this.getLadderStyle(ladder)} className={"ladder "}></div>
 		    			)
@@ -241,7 +163,7 @@ class Home extends React.Component {
 		    	</div>
 		    	<div className="snake-wrapper">
 		    	{
-		    		this.state.snakes.map(function(snake,index){
+		    		this.props.snakes.map(function(snake,index){
 		    			return(
 		    					<div key={index} style={this.getSnakesStyle(snake)} className={"snake "}></div>
 		    			)
@@ -250,7 +172,7 @@ class Home extends React.Component {
 		    	</div>
 		    	<div className="players-wrapper">
 		    	{
-		    		this.state.players.map(function(player,index){
+		    		this.props.players.map(function(player,index){
 		    			return(
 		    					<div key={index} style={{ bottom: (Math.floor(player.position/10)*10)+5+'%', left: ( (Math.floor(player.position/10)%2===0) ? (((player.position%10)-1)*10)+5 : ((10-(player.position%10))*10)+5)+'%' }} className={"player "+ player.name}>{player.name}</div>
 		    			)
@@ -260,7 +182,7 @@ class Home extends React.Component {
 		    	{this.displayGameGrid()}
 
 		    	<div className="dice-wrapper">
-		    		<div className="current-player">Current Player : {this.state.currentPlayer.name}</div>
+		    		<div className="current-player">Current Player : {this.getcurrentPlayerName()}</div>
 		    		<div className="play-dice" onClick={this.playDice}>Roll Dice</div>
 		    	</div>
 		    </div>
@@ -268,3 +190,9 @@ class Home extends React.Component {
 		);
 	}
 }
+
+const ConnectHome = connect(
+	mapStateToProps,mapDispatchToProps
+)(Home)
+
+export default ConnectHome;
