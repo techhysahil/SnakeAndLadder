@@ -166,6 +166,14 @@ class Home extends React.Component {
 		this.props.resetAppState();
 		store.dispatch(push('/start'))
 	}
+	
+	left(x){
+		return (Math.floor((x-1)/10)%2===0) ? (((x-1)%10)*10)+5 : (100-((((x-1)%10)*10)+5))
+	}
+
+	bottom(x){
+		return ((Math.floor((x-1)/10)*10)+5)
+	}
 
 	render() {
 		return (
@@ -193,9 +201,16 @@ class Home extends React.Component {
 		    	{
 		    		this.props.players.map(function(player,index){
 		    			return(
-		    					<div key={index} style={{ bottom: (Math.floor(player.position/10)*10)+5+'%', left: ( (Math.floor(player.position/10)%2===0) ? (((player.position%10)-1)*10)+5 : ((10-(player.position%10))*10)+5)+'%' }} className={"player "+ player.name}>{player.name}</div>
+		    					<div 
+		    						key={index} 
+		    						style={{ 
+		    								bottom: this.bottom(player.position)+'%',
+		    								left: this.left(player.position)+'%' 
+		    							}} 
+		    						className={"player "+ player.name}>{player.name}
+		    					</div>
 		    			)
-		    		})
+		    		}.bind(this))
 		    	}
 		    	</div>
 		    	{this.displayGameGrid()}
